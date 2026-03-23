@@ -1,0 +1,408 @@
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:43:50"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:43:50"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:43:50"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:43:51"}
+{"level":"warn","message":"Unauthorized admin access attempt","service":"moltghost-backend","timestamp":"2026-03-23 12:43:51"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:43:51"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:43:51"}
+{"level":"warn","message":"Unauthorized admin access attempt","service":"moltghost-backend","timestamp":"2026-03-23 12:43:51"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:43:51"}
+{"level":"warn","message":"Unauthorized admin access attempt","service":"moltghost-backend","timestamp":"2026-03-23 12:43:51"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:43:51"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:43:51"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:43:51"}
+{"level":"warn","message":"Unauthorized admin access attempt","service":"moltghost-backend","timestamp":"2026-03-23 12:43:51"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:43:51"}
+{"level":"warn","message":"Unauthorized admin access attempt","service":"moltghost-backend","timestamp":"2026-03-23 12:43:51"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:43:51"}
+{"level":"warn","message":"Unauthorized admin access attempt","service":"moltghost-backend","timestamp":"2026-03-23 12:43:51"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"level":"warn","message":"Unauthorized admin access attempt","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"level":"warn","message":"Unauthorized admin access attempt","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"level":"warn","message":"Unauthorized admin access attempt","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"level":"warn","message":"Unauthorized admin access attempt","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"level":"warn","message":"Unauthorized admin access attempt","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"level":"warn","message":"Unauthorized admin access attempt","service":"moltghost-backend","timestamp":"2026-03-23 12:45:25"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:45:52"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:45:52"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:45:52"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:45:53","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:45:53","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:45:53"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:45:53","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:45:53","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:45:53"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:45:53","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:45:53","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:45:53"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:45:53"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:45:53"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:45:53"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:45:53","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:45:53","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:45:53"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching stats","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching stats","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:45:54"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:47:55"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:47:55"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:47:55"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching stats","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching stats","service":"moltghost-backend","timestamp":"2026-03-23 12:47:56"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:50:30"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:50:30"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:50:30"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"level":"info","message":"[ADMIN] User result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","type":"number","userResult":[{"count":1}]}
+{"depResult":[{"count":1}],"level":"info","message":"[ADMIN] Deployments result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","type":"number"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching active count:","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching stats - main catch","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"level":"info","message":"[ADMIN] User result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","type":"number","userResult":[{"count":1}]}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"depResult":[{"count":1}],"level":"info","message":"[ADMIN] Deployments result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31","type":"number"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching active count:","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching stats - main catch","service":"moltghost-backend","timestamp":"2026-03-23 12:50:31"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:51:42"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:51:42"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:51:42"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"level":"info","message":"[ADMIN] User result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","type":"number","userResult":[{"count":1}]}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"depResult":[{"count":1}],"level":"info","message":"[ADMIN] Deployments result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","type":"number"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching active count:","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching stats - main catch","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"level":"info","message":"[ADMIN] User result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","type":"number","userResult":[{"count":1}]}
+{"depResult":[{"count":1}],"level":"info","message":"[ADMIN] Deployments result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43","type":"number"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching active count:","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching stats - main catch","service":"moltghost-backend","timestamp":"2026-03-23 12:51:43"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:51:55"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:51:55"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:51:55"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:51:56","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:51:56","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:51:56"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:51:56","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:51:56","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:51:56"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:51:56","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:51:56","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:51:56"}
+{"level":"info","message":"[ADMIN] User result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:51:56","type":"number","userResult":[{"count":1}]}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:51:56"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:51:56"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"depResult":[{"count":1}],"level":"info","message":"[ADMIN] Deployments result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57","type":"number"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching active count:","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching stats - main catch","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"level":"info","message":"[ADMIN] User result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57","type":"number","userResult":[{"count":1}]}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"depResult":[{"count":1}],"level":"info","message":"[ADMIN] Deployments result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57","type":"number"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching active count:","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching stats - main catch","service":"moltghost-backend","timestamp":"2026-03-23 12:51:57"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:52:50"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:52:51","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:52:51","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:52:51"}
+{"level":"info","message":"[ADMIN] User result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:52:51","type":"number","userResult":[{"count":1}]}
+{"depResult":[{"count":1}],"level":"info","message":"[ADMIN] Deployments result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:52:51","type":"number"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching active count:","service":"moltghost-backend","timestamp":"2026-03-23 12:52:51"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching stats - main catch","service":"moltghost-backend","timestamp":"2026-03-23 12:52:51"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:52:51"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:52:51","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:52:51","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:52:51"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:52:51"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:52:52"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:52:52"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:52:52","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:52:52","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:52:52"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:52:52"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:52:52"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:53:44"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"level":"info","message":"[ADMIN] User result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45","type":"number","userResult":[{"count":1}]}
+{"depResult":[{"count":1}],"level":"info","message":"[ADMIN] Deployments result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45","type":"number"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching active count:","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching stats - main catch","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"level":"info","message":"[ADMIN] User result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45","type":"number","userResult":[{"count":1}]}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"depResult":[{"count":1}],"level":"info","message":"[ADMIN] Deployments result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45","type":"number"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching active count:","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching stats - main catch","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:53:45"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:53:46","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:53:46","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:53:46"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:53:46"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:53:46"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:54:47"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"level":"info","message":"[ADMIN] User result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48","type":"number","userResult":[{"count":1}]}
+{"depResult":[{"count":1}],"level":"info","message":"[ADMIN] Deployments result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48","type":"number"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching active count:","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching stats - main catch","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"level":"info","message":"[ADMIN] User result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48","type":"number","userResult":[{"count":1}]}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"depResult":[{"count":1}],"level":"info","message":"[ADMIN] Deployments result raw:","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48","type":"number"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching active count:","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"error":{"code":"22P02","file":"enum.c","line":"129","name":"NeonDbError","routine":"enum_in","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"level":"error","message":"[ADMIN] Error fetching stats - main catch","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:54:48"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:54:49"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:54:49"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:54:49"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:54:49"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:54:49","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:54:49","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:54:49"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:54:49"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:54:49"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:55:32"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:55:33","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:55:33","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:55:33"}
+{"count":1,"level":"info","message":"[ADMIN] All users fetched","service":"moltghost-backend","timestamp":"2026-03-23 12:55:33"}
+{"count":1,"level":"info","message":"[ADMIN] All deployments fetched","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"count":1,"level":"info","message":"[ADMIN] Active deployments counted","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"count":0,"level":"info","message":"[ADMIN] Failed deployments counted","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"activeDeployments":1,"failedDeployments":0,"level":"info","message":"[ADMIN] Dashboard stats computed","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34","totalDeployments":1,"totalUsers":1}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"count":1,"level":"info","message":"[ADMIN] All users fetched","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"count":1,"level":"info","message":"[ADMIN] All deployments fetched","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"count":1,"level":"info","message":"[ADMIN] Active deployments counted","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"count":0,"level":"info","message":"[ADMIN] Failed deployments counted","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"activeDeployments":1,"failedDeployments":0,"level":"info","message":"[ADMIN] Dashboard stats computed","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34","totalDeployments":1,"totalUsers":1}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:55:34"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":1,"level":"info","message":"[ADMIN] All users fetched","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":1,"level":"info","message":"[ADMIN] All deployments fetched","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":1,"level":"info","message":"[ADMIN] Active deployments counted","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":0,"level":"info","message":"[ADMIN] Failed deployments counted","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"activeDeployments":1,"failedDeployments":0,"level":"info","message":"[ADMIN] Dashboard stats computed","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53","totalDeployments":1,"totalUsers":1}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/stats","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching dashboard stats","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":1,"level":"info","message":"[ADMIN] All users fetched","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":1,"level":"info","message":"[ADMIN] All deployments fetched","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":1,"level":"info","message":"[ADMIN] Active deployments counted","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":0,"level":"info","message":"[ADMIN] Failed deployments counted","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"activeDeployments":1,"failedDeployments":0,"level":"info","message":"[ADMIN] Dashboard stats computed","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53","totalDeployments":1,"totalUsers":1}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/users","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all users","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":1,"level":"info","message":"[ADMIN] Found users","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched users with deployment counts","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"hasAuthHeader":true,"level":"info","message":"Admin request received","path":"/deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"level":"info","message":"Token verified","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53","userWallet":"B2JzFDrFN1"}
+{"level":"info","message":"Admin access granted","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53","wallet":"B2JzFDrFN1"}
+{"level":"info","message":"[ADMIN] Fetching all deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":1,"level":"info","message":"[ADMIN] Found deployments","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}
+{"count":1,"level":"info","message":"[ADMIN] Enriched deployments with user info","service":"moltghost-backend","timestamp":"2026-03-23 12:57:53"}

@@ -1,8 +1,9 @@
 import { Router, Request, Response } from "express";
 import { db } from "../db";
 import { users, deployments } from "../db/schema";
-import { desc, count, eq, inArray } from "drizzle-orm";
+import { desc, count, eq, inArray, or } from "drizzle-orm";
 import { requireAdminAuth } from "../middleware/auth";
+import logger from "../lib/logger";
 
 const router: Router = Router();
 
@@ -11,10 +12,13 @@ const router: Router = Router();
 // GET /api/admin/users — fetch all users
 router.get("/users", requireAdminAuth, async (req: Request, res: Response) => {
   try {
+    logger.info("[ADMIN] Fetching all users");
     const allUsers = await db
       .select()
       .from(users)
       .orderBy(desc(users.createdAt));
+
+    logger.info("[ADMIN] Found users", { count: allUsers.length });
 
     // Enrich with deployment count
     const userDeploymentCounts = await db
@@ -34,9 +38,12 @@ router.get("/users", requireAdminAuth, async (req: Request, res: Response) => {
       deploymentCount: countMap.get(user.id) ?? 0,
     }));
 
+    logger.info("[ADMIN] Enriched users with deployment counts", {
+      count: enrichedUsers.length,
+    });
     res.json(enrichedUsers);
   } catch (err) {
-    console.error("GET /api/admin/users", err);
+    logger.error("[ADMIN] Error fetching users", { error: err });
     res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -49,10 +56,15 @@ router.get(
   requireAdminAuth,
   async (req: Request, res: Response) => {
     try {
+      logger.info("[ADMIN] Fetching all deployments");
       const allDeployments = await db
         .select()
         .from(deployments)
         .orderBy(desc(deployments.createdAt));
+
+      logger.info("[ADMIN] Found deployments", {
+        count: allDeployments.length,
+      });
 
       // Fetch all user IDs referenced
       const userIds = [...new Set(allDeployments.map((d) => d.userId))];
@@ -64,6 +76,7 @@ router.get(
           .from(users)
           .where(inArray(users.id, userIds));
         userList.forEach((u) => userMap.set(u.id, u));
+        logger.debug("[ADMIN] Loaded user info", { users: userList.length });
       }
 
       // Enrich deployments with user info
@@ -77,9 +90,12 @@ router.get(
         };
       });
 
+      logger.info("[ADMIN] Enriched deployments with user info", {
+        count: enrichedDeployments.length,
+      });
       res.json(enrichedDeployments);
     } catch (err) {
-      console.error("GET /api/admin/deployments", err);
+      logger.error("[ADMIN] Error fetching deployments", { error: err });
       res.status(500).json({ error: "Internal server error" });
     }
   },
@@ -90,39 +106,47 @@ router.get(
 // GET /api/admin/stats — fetch admin dashboard stats
 router.get("/stats", requireAdminAuth, async (req: Request, res: Response) => {
   try {
-    const [{ totalUsers }] = await db
-      .select({ totalUsers: count() })
-      .from(users);
+    logger.info("[ADMIN] Fetching dashboard stats");
 
-    const [{ totalDeployments }] = await db
-      .select({ totalDeployments: count() })
-      .from(deployments);
+    // Get all users
+    const allUsers = await db.select().from(users);
+    logger.info("[ADMIN] All users fetched", { count: allUsers.length });
+    const totalUsers = allUsers.length;
 
-    const [{ activeDeployments }] = await db
-      .select({ activeDeployments: count() })
-      .from(deployments)
-      .where(
-        inArray(deployments.status, [
-          "pending",
-          "provisioning",
-          "starting",
-          "running",
-        ]),
-      );
-
-    const [{ failedDeployments }] = await db
-      .select({ failedDeployments: count() })
-      .from(deployments)
-      .where(eq(deployments.status, "failed"));
-
-    res.json({
-      totalUsers: totalUsers ?? 0,
-      totalDeployments: totalDeployments ?? 0,
-      activeDeployments: activeDeployments ?? 0,
-      failedDeployments: failedDeployments ?? 0,
+    // Get all deployments
+    const allDeployments = await db.select().from(deployments);
+    logger.info("[ADMIN] All deployments fetched", {
+      count: allDeployments.length,
     });
+    const totalDeployments = allDeployments.length;
+
+    // Count active deployments
+    const activeDeployments = allDeployments.filter((d) =>
+      ["pending", "provisioning", "starting", "running"].includes(d.status),
+    ).length;
+    logger.info("[ADMIN] Active deployments counted", {
+      count: activeDeployments,
+    });
+
+    // Count failed deployments
+    const failedDeployments = allDeployments.filter(
+      (d) => d.status === "failed",
+    ).length;
+    logger.info("[ADMIN] Failed deployments counted", {
+      count: failedDeployments,
+    });
+
+    const stats = {
+      totalUsers,
+      totalDeployments,
+      activeDeployments,
+      failedDeployments,
+    };
+
+    logger.info("[ADMIN] Dashboard stats computed", stats);
+    res.json(stats);
   } catch (err) {
-    console.error("GET /api/admin/stats", err);
+    logger.error("[ADMIN] Error fetching stats - main catch", { error: err });
     res.status(500).json({ error: "Internal server error" });
   }
 });
