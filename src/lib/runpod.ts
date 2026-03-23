@@ -348,9 +348,15 @@ export async function deletePod(podId: string): Promise<void> {
   try {
     await runpodQuery(query);
   } catch (err) {
-    // If pod already terminated, that's fine
-    const msg = String(err);
-    if (msg.includes("not found") || msg.includes("already terminated")) {
+    // If pod already gone, that's fine — let the caller proceed
+    const msg = String(err).toLowerCase();
+    if (
+      msg.includes("not found") ||
+      msg.includes("already terminated") ||
+      msg.includes("does not exist") ||
+      msg.includes("no pod") ||
+      msg.includes("pod_not_found")
+    ) {
       return;
     }
     throw err;

@@ -14,12 +14,7 @@ import {
   deleteTunnel,
   deleteDnsRecord,
 } from "../lib/cloudflare";
-import {
-  createPod,
-  stopPod,
-  deletePod,
-  generateStartupScript,
-} from "../lib/runpod";
+import { createPod, deletePod, generateStartupScript } from "../lib/runpod";
 import crypto from "crypto";
 
 const router: Router = Router();
@@ -151,24 +146,34 @@ router.delete("/:id", requireAuth, async (req: Request, res: Response) => {
       return;
     }
 
-    // Cleanup RunPod + Cloudflare resources asynchronously
+    // 1. Terminate RunPod pod (best-effort)
     if (deployment.podId) {
-      stopPod(deployment.podId).catch(console.error);
-      deletePod(deployment.podId).catch(console.error);
+      try {
+        await deletePod(deployment.podId);
+      } catch (err) {
+        console.warn(`Failed to terminate pod ${deployment.podId}:`, err);
+      }
     }
+
+    // 2. Cleanup Cloudflare resources (await both, best-effort)
     if (deployment.tunnelId) {
-      deleteTunnel(deployment.tunnelId).catch(console.error);
+      try {
+        await deleteTunnel(deployment.tunnelId);
+      } catch (err) {
+        console.warn(`Failed to delete tunnel ${deployment.tunnelId}:`, err);
+      }
     }
+
     if (deployment.dnsRecordId) {
-      deleteDnsRecord(deployment.dnsRecordId).catch(console.error);
+      try {
+        await deleteDnsRecord(deployment.dnsRecordId);
+      } catch (err) {
+        console.warn(`Failed to delete DNS ${deployment.dnsRecordId}:`, err);
+      }
     }
 
-    await db
-      .update(deployments)
-      .set({ status: "stopped", updatedAt: new Date() })
-      .where(eq(deployments.id, req.params.id));
-
-    deploymentEmitter.emit("status", req.params.id, "stopped");
+    // 3. Remove DB record after all infra cleanup
+    await db.delete(deployments).where(eq(deployments.id, req.params.id));
 
     res.status(204).send();
   } catch (err) {
