@@ -467,7 +467,7 @@ log_step() {
   json=\$(printf '{"message":"%s","level":"%s","phase":"%s"}' "\$(echo "\$msg" | sed 's/"/\\\\"/g')" "\$level" "\$phase")
   curl -sSL -m 10 -X POST "\$LOG_URL" \\
     -H "Content-Type: application/json" \\
-    -H "X-Callback-Secret: \$CALLBACK_SECRET" \\
+    -H "X-Worker-Secret: \$CALLBACK_SECRET" \
     -d "\$json" >> /var/log/moltghost-logpost.log 2>&1
 }
 
@@ -477,7 +477,7 @@ on_error() {
   sleep 3
   curl -sfL -m 15 -X POST "\$CALLBACK_URL" \\
     -H "Content-Type: application/json" \\
-    -H "X-Callback-Secret: \$CALLBACK_SECRET" \\
+    -H "X-Worker-Secret: \$CALLBACK_SECRET" \
     -d "{\\"agentId\\":\\"\$AGENT_ID\\",\\"status\\":\\"error\\",\\"ip\\":\\"\$AGENT_DOMAIN\\",\\"domain\\":\\"\$AGENT_DOMAIN\\"}" || true
 }
 trap 'on_error \$LINENO' ERR
@@ -491,7 +491,7 @@ log_step "Bootstrap starting (pre-baked image) — pod \${RUNPOD_POD_ID:-unknown
 echo "[\$(date '+%H:%M:%S')] Testing connectivity to \$LOG_URL ..." >> "\$LOG_FILE"
 CONN_HTTP=\$(curl -sSL -o /dev/null -w "%{http_code}" -m 10 -X POST "\$LOG_URL" \\
   -H "Content-Type: application/json" \\
-  -H "X-Callback-Secret: \$CALLBACK_SECRET" \\
+  -H "X-Worker-Secret: \$CALLBACK_SECRET" \\
   -d '{"message":"_connectivity_test","level":"info","phase":"deploy"}' 2>&1) || CONN_HTTP="FAILED: \$?"
 echo "[\$(date '+%H:%M:%S')] Connectivity result: \$CONN_HTTP" >> "\$LOG_FILE"
 if [ "\$CONN_HTTP" != "200" ]; then
@@ -820,7 +820,7 @@ CALLBACK_OK=false
 for ATTEMPT in 1 2 3; do
   CALLBACK_RESULT=\$(curl -sfL -m 20 -X POST "\$CALLBACK_URL" \\
     -H "Content-Type: application/json" \\
-    -H "X-Callback-Secret: \$CALLBACK_SECRET" \\
+    -H "X-Worker-Secret: \$CALLBACK_SECRET" \\
     -d "{\\"agentId\\":\\"\$AGENT_ID\\",\\"status\\":\\"running\\",\\"ip\\":\\"\$AGENT_DOMAIN\\",\\"domain\\":\\"\$AGENT_DOMAIN\\"}" 2>&1) || true
 
   if echo "\$CALLBACK_RESULT" | grep -q "success"; then

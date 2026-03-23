@@ -41,7 +41,8 @@ function getAccountId(): string {
 // ---------------------------------------------------------------------------
 export function buildAgentSubdomain(agentId: string): string {
   const shortId = agentId.slice(0, 8);
-  return `agent-${shortId}.moltghost.io`;
+  const domain = process.env.CLOUDFLARE_TUNNEL_DOMAIN || "moltghost.io";
+  return `agent-${shortId}.${domain}`;
 }
 
 // ---------------------------------------------------------------------------

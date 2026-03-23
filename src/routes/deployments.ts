@@ -98,9 +98,14 @@ router.post("/", requireAuth, async (req: Request, res: Response) => {
           "X-Worker-Secret": process.env.WORKER_SECRET!,
         },
         body: JSON.stringify({ deploymentId: deployment.id }),
-      }).catch((e) => console.error("Worker trigger failed:", e));
+      })
+        .then((r) => console.log(`Worker trigger: ${r.status}`))
+        .catch((e) => console.error("Worker trigger failed:", e));
     } else {
       // Dev fallback: call internal orchestrate directly
+      console.log(
+        `[orchestrate] Triggering internal orchestration for ${deployment.id}`,
+      );
       fetch(
         `http://localhost:${process.env.PORT ?? 3001}/api/deployments/internal/orchestrate`,
         {
@@ -111,7 +116,14 @@ router.post("/", requireAuth, async (req: Request, res: Response) => {
           },
           body: JSON.stringify({ deploymentId: deployment.id }),
         },
-      ).catch((e) => console.error("Dev orchestrate failed:", e));
+      )
+        .then(async (r) => {
+          const body = await r.text();
+          console.log(`[orchestrate] Internal response: ${r.status} ${body}`);
+        })
+        .catch((e) =>
+          console.error("[orchestrate] Dev orchestrate failed:", e),
+        );
     }
 
     res.status(201).json(deployment);
@@ -253,7 +265,9 @@ router.get(
 
       const sendLog = (depId: string, level: string, message: string) => {
         if (depId !== req.params.id) return;
-        res.write(`data: ${JSON.stringify({ level, message })}\n\n`);
+        res.write(
+          `event: log\ndata: ${JSON.stringify({ level, message })}\n\n`,
+        );
       };
 
       const sendStatus = (depId: string, status: string) => {
@@ -291,7 +305,7 @@ router.post(
         .where(eq(deployments.id, req.params.id));
 
       deploymentEmitter.emit("status", req.params.id, status);
-      res.status(204).send();
+      res.json({ success: true });
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Internal server error" });
@@ -316,6 +330,13 @@ router.post(
 
     res.status(202).json({ message: "Orchestration started" });
 
+    // Helper: insert a log visible to the user in Console Logs modal
+    const addLog = async (message: string, level = "info") => {
+      console.log(`[orchestrate:${deploymentId.slice(0, 8)}] ${message}`);
+      await db.insert(deploymentLogs).values({ deploymentId, level, message });
+      deploymentEmitter.emit("log", deploymentId, level, message);
+    };
+
     // Run async — errors are logged but not returned to caller
     (async () => {
       try {
@@ -328,6 +349,7 @@ router.post(
           throw new Error(`Deployment ${deploymentId} not found`);
 
         // 1. Mark provisioning
+        await addLog("Orchestration started — provisioning resources...");
         await db
           .update(deployments)
           .set({ status: "provisioning", updatedAt: new Date() })
@@ -335,45 +357,49 @@ router.post(
         deploymentEmitter.emit("status", deploymentId, "provisioning");
 
         // 2. Create Cloudflare tunnel
+        await addLog("Creating Cloudflare tunnel...");
         const shortId = deploymentId.slice(0, 8);
-        const subdomain = `agent-${shortId}`;
-        const { tunnelId, tunnelToken } = await createTunnel(
-          `moltghost-${shortId}`,
-        );
+        const tunnelDomain =
+          process.env.CLOUDFLARE_TUNNEL_DOMAIN || "moltghost.io";
+        const agentDomain = `agent-${shortId}.${tunnelDomain}`;
+        const { tunnelId, tunnelToken } = await createTunnel(deploymentId);
         const { recordId: dnsRecordId } = await createTunnelDns(
-          subdomain,
+          agentDomain,
           tunnelId,
         );
+        await addLog(`Tunnel created: ${agentDomain}`, "success");
 
         await db
           .update(deployments)
           .set({
             tunnelId,
             tunnelToken,
-            agentDomain: `${subdomain}.${process.env.CLOUDFLARE_TUNNEL_DOMAIN}`,
+            agentDomain,
             dnsRecordId,
             updatedAt: new Date(),
           })
           .where(eq(deployments.id, deploymentId));
 
         // 3. Generate startup script
-        const callbackSecret = crypto.randomBytes(16).toString("hex");
+        const gatewayToken = crypto.randomBytes(16).toString("hex");
         const backendBase =
           process.env.BACKEND_PUBLIC_URL ??
           `http://localhost:${process.env.PORT ?? 3001}`;
 
         const startupScript = generateStartupScript({
           agentId: deploymentId,
-          agentDomain: `${subdomain}.${process.env.CLOUDFLARE_TUNNEL_DOMAIN}`,
-          gatewayToken: callbackSecret,
+          agentDomain,
+          gatewayToken,
           callbackUrl: `${backendBase}/api/deployments/${deploymentId}/callback`,
           callbackSecret: process.env.WORKER_SECRET!,
           logUrl: `${backendBase}/api/deployments/${deploymentId}/logs`,
           tunnelToken,
           model: deployment.modelId,
         });
+        await addLog("Startup script generated");
 
         // 4. Mark starting + create pod
+        await addLog("Creating GPU pod on RunPod...");
         await db
           .update(deployments)
           .set({ status: "starting", updatedAt: new Date() })
@@ -383,8 +409,12 @@ router.post(
         const pod = await createPod(
           `moltghost-${shortId}`,
           startupScript,
-          "NVIDIA GeForce RTX 4090", // TODO: make configurable
+          undefined, // uses RUNPOD_GPU_TYPE from env
           deployment.modelImage,
+        );
+        await addLog(
+          `Pod created: ${pod.podId} — waiting for boot...`,
+          "success",
         );
 
         await db
@@ -394,7 +424,9 @@ router.post(
 
         // Pod will call /callback when ready — status updated there
       } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
         console.error("Orchestration failed", err);
+        await addLog(`Orchestration failed: ${msg}`, "error").catch(() => {});
         await db
           .update(deployments)
           .set({ status: "failed", updatedAt: new Date() })

@@ -22,6 +22,9 @@ app.use(
 );
 app.use(express.json());
 
+// Disable ETag to prevent 304 responses for polling APIs
+app.set("etag", false);
+
 // ── Routes ─────────────────────────────────────────────────────────────────────
 app.use("/api/models", modelsRouter);
 app.use("/api/runpod", runpodRouter);
