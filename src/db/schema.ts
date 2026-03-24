@@ -124,6 +124,10 @@ export const deployments = pgTable("deployments", {
     .notNull()
     .default({ enableAutoSleep: false, idleTimeout: 15 }),
 
+  // Client-side zero-knowledge encryption
+  isEncrypted: boolean("is_encrypted").notNull().default(false),
+  encryptionVersion: text("encryption_version"),
+
   // RunPod / infra (nullable until provisioned)
   podId: text("pod_id"),
   tunnelId: text("tunnel_id"),

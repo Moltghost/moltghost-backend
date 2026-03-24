@@ -15,6 +15,7 @@ import {
   deleteDnsRecord,
 } from "../lib/cloudflare";
 import { createPod, deletePod, generateStartupScript } from "../lib/runpod";
+import { serverEncrypt, serverDecrypt } from "../lib/encryption";
 import crypto from "crypto";
 
 const router: Router = Router();
@@ -62,10 +63,13 @@ router.get("/:id", requireAuth, async (req: Request, res: Response) => {
 // PATCH /api/deployments/:id — update agent name/description
 router.patch("/:id", requireAuth, async (req: Request, res: Response) => {
   try {
-    const { agentName, agentDescription } = req.body as {
-      agentName?: string;
-      agentDescription?: string;
-    };
+    const { agentName, agentDescription, isEncrypted, encryptionVersion } =
+      req.body as {
+        agentName?: string;
+        agentDescription?: string;
+        isEncrypted?: boolean;
+        encryptionVersion?: string;
+      };
 
     const [updated] = await db
       .update(deployments)
@@ -74,6 +78,8 @@ router.patch("/:id", requireAuth, async (req: Request, res: Response) => {
         ...(agentDescription !== undefined && {
           agentDescription: agentDescription || null,
         }),
+        ...(isEncrypted !== undefined && { isEncrypted }),
+        ...(encryptionVersion !== undefined && { encryptionVersion }),
         updatedAt: new Date(),
       })
       .where(
@@ -117,6 +123,8 @@ router.post("/", requireAuth, async (req: Request, res: Response) => {
         agentBehavior: body.agentBehavior,
         notifications: body.notifications,
         autoSleep: body.autoSleep,
+        isEncrypted: body.isEncrypted ?? false,
+        encryptionVersion: body.encryptionVersion ?? null,
         status: "pending",
       })
       .returning();
@@ -416,7 +424,7 @@ router.post(
           .update(deployments)
           .set({
             tunnelId,
-            tunnelToken,
+            tunnelToken: serverEncrypt(tunnelToken),
             agentDomain,
             dnsRecordId,
             updatedAt: new Date(),
