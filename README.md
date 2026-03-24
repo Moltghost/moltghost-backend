@@ -1,6 +1,6 @@
 # MoltGhost Backend
 
-Standalone Express.js + TypeScript backend untuk platform MoltGhost. Mengelola deployment AI agent, provisioning infrastruktur (Cloudflare Tunnel + RunPod GPU), autentikasi via Privy, dan real-time updates via WebSocket.
+Standalone Express.js + TypeScript backend for the MoltGhost platform. Manages AI agent deployment, infrastructure provisioning (Cloudflare Tunnel + RunPod GPU), authentication via Privy, and real-time updates via WebSocket.
 
 ---
 
@@ -19,7 +19,7 @@ Standalone Express.js + TypeScript backend untuk platform MoltGhost. Mengelola d
 
 ---
 
-## Struktur Project
+## Project Structure
 
 ```
 moltghost-backend/
@@ -34,6 +34,7 @@ moltghost-backend/
 │   ├── lib/
 │   │   ├── privy.ts              # Privy client singleton
 │   │   ├── cloudflare.ts         # Cloudflare Tunnel + DNS helpers
+│   │   ├── logger.ts             # Winston logger (local file + console)
 │   │   └── runpod.ts             # RunPod GraphQL + pod management
 │   ├── middleware/
 │   │   └── auth.ts               # requireAuth, requireDeploySecret, requireWorkerSecret
@@ -43,9 +44,12 @@ moltghost-backend/
 │       ├── models.ts             # GET /api/models
 │       ├── runpod.ts             # GET /api/runpod/gpu-types
 │       ├── deployments.ts        # Full deployment CRUD + orchestration + logs
-│       └── users.ts              # GET|PATCH /api/users/me
+│       ├── users.ts              # GET|PATCH /api/users/me
+│       └── admin.ts              # Admin endpoints (users, deployments, stats)
 ├── scripts/
 │   └── tunnel.sh                 # Auto-setup cloudflared quick tunnel + update .env
+├── drizzle/                      # Generated SQL migrations
+├── logs/                         # Local log files (Winston)
 ├── drizzle.config.ts
 ├── .env.example
 ├── package.json
@@ -62,54 +66,54 @@ moltghost-backend/
 pnpm install
 ```
 
-### 2. Konfigurasi environment
+### 2. Configure environment
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` dengan nilai yang sesuai (lihat bagian [Environment Variables](#environment-variables)).
+Edit `.env` with the appropriate values (see [Environment Variables](#environment-variables)).
 
 ### 3. Generate + migrate database
 
 ```bash
-pnpm db:generate   # generate SQL migration dari schema
-pnpm db:migrate    # jalankan migration ke Neon DB
-pnpm db:seed       # isi tabel models dengan data awal
+pnpm db:generate   # generate SQL migration from schema
+pnpm db:migrate    # run migration against the database
+pnpm db:seed       # populate models table with initial data
 ```
 
-### 4. Jalankan server
+### 4. Run the server
 
 ```bash
 pnpm dev     # development (tsx watch)
-pnpm build   # compile TypeScript ke dist/
-pnpm start   # jalankan hasil build
+pnpm build   # compile TypeScript to dist/
+pnpm start   # run compiled build
 ```
 
-Server berjalan di `http://localhost:3001` by default.
+Server runs on `http://localhost:3001` by default.
 
 ---
 
 ## Environment Variables
 
-| Variable | Keterangan |
+| Variable | Description |
 |---|---|
-| `PORT` | Port server (default: `3001`) |
-| `DATABASE_URL` | Neon PostgreSQL connection string |
-| `PRIVY_APP_ID` | Privy App ID dari dashboard Privy |
-| `PRIVY_APP_SECRET` | Privy App Secret dari dashboard Privy |
-| `CLOUDFLARE_API_TOKEN` | CF API token dengan permission Zone DNS + Account Tunnel |
-| `CLOUDFLARE_ZONE_ID` | Zone ID domain di Cloudflare |
-| `CLOUDFLARE_ACCOUNT_ID` | Account ID Cloudflare |
-| `CLOUDFLARE_TUNNEL_DOMAIN` | Base domain untuk agent subdomain (e.g. `moltghost.io`) |
-| `RUNPOD_API_KEY` | API key dari RunPod |
-| `RUNPOD_NETWORK_VOLUME_ID` | Network volume ID untuk persistent storage (e.g. `vol_xxxxxxxx`) |
-| `RUNPOD_ALLOWED_GPU_IDS` | Comma-separated GPU display names yang diizinkan |
-| `DEPLOY_SECRET` | Secret untuk internal orchestration endpoint (bebas diisi) |
-| `WORKER_SECRET` | Secret untuk CF Worker → backend callback |
-| `WORKER_URL` | URL Cloudflare Worker yang men-trigger orchestration |
-| `BACKEND_PUBLIC_URL` | Public URL backend (dipakai pod untuk callback) |
-| `FRONTEND_URL` | URL frontend untuk CORS (default: `http://localhost:3000`) |
+| `PORT` | Server port (default: `3001`) |
+| `DATABASE_URL` | PostgreSQL connection string |
+| `PRIVY_APP_ID` | Privy App ID from the Privy dashboard |
+| `PRIVY_APP_SECRET` | Privy App Secret from the Privy dashboard |
+| `CLOUDFLARE_API_TOKEN` | CF API token with Zone DNS + Account Tunnel permissions |
+| `CLOUDFLARE_ZONE_ID` | Zone ID of the domain on Cloudflare |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare Account ID |
+| `CLOUDFLARE_TUNNEL_DOMAIN` | Base domain for agent subdomains (e.g. `moltghost.io`) |
+| `RUNPOD_API_KEY` | API key from RunPod |
+| `RUNPOD_NETWORK_VOLUME_ID` | Network volume ID for persistent storage (e.g. `vol_xxxxxxxx`) |
+| `RUNPOD_ALLOWED_GPU_IDS` | Comma-separated GPU display names that are allowed |
+| `DEPLOY_SECRET` | Secret for internal orchestration endpoint |
+| `WORKER_SECRET` | Secret for CF Worker → backend callback |
+| `WORKER_URL` | URL of the Cloudflare Worker that triggers orchestration |
+| `BACKEND_PUBLIC_URL` | Public URL of the backend (used by pods for callbacks) |
+| `FRONTEND_URL` | Frontend URL for CORS (default: `http://localhost:3000`) |
 
 ---
 
@@ -130,7 +134,7 @@ Response:
 
 ### Models
 
-#### List semua model aktif
+#### List all active models
 
 ```
 GET /api/models
@@ -158,7 +162,7 @@ Response: array of model objects.
 
 ### RunPod
 
-> Semua endpoint memerlukan `Authorization: Bearer <privy-token>`.
+> All endpoints require `Authorization: Bearer <privy-token>`.
 
 #### List GPU types
 
@@ -166,7 +170,7 @@ Response: array of model objects.
 GET /api/runpod/gpu-types
 ```
 
-Response di-cache in-memory selama 5 menit.
+Response is cached in-memory for 5 minutes.
 
 ```json
 [
@@ -185,21 +189,21 @@ Response di-cache in-memory selama 5 menit.
 
 ### Deployments
 
-> Semua endpoint (kecuali internal) memerlukan `Authorization: Bearer <privy-token>`.
+> All endpoints (except internal) require `Authorization: Bearer <privy-token>`.
 
-#### List deployments milik user
+#### List deployments for the authenticated user
 
 ```
 GET /api/deployments
 ```
 
-#### Detail deployment
+#### Get deployment details
 
 ```
 GET /api/deployments/:id
 ```
 
-#### Buat deployment baru
+#### Create a new deployment
 
 ```
 POST /api/deployments
@@ -229,29 +233,29 @@ Response `201`:
 { "id": "clx...", "status": "pending", ... }
 ```
 
-Setelah record dibuat, backend secara otomatis men-trigger orchestration:
-- Jika `WORKER_URL` diset → fire CF Worker
-- Jika tidak → panggil internal endpoint langsung (dev mode)
+After the record is created, the backend automatically triggers orchestration:
+- If `WORKER_URL` is set → fires CF Worker
+- Otherwise → calls the internal endpoint directly (dev mode)
 
-#### Hapus deployment
+#### Delete a deployment
 
 ```
 DELETE /api/deployments/:id
 ```
 
-Menghentikan pod di RunPod, menghapus Cloudflare Tunnel + DNS record, dan mengubah status menjadi `stopped`. Response `204 No Content`.
+Stops the pod on RunPod, removes the Cloudflare Tunnel + DNS record, and sets the status to `stopped`. Returns `204 No Content`.
 
 ---
 
 ### Deployment Logs
 
-#### Ambil logs (paginated)
+#### Fetch logs (paginated)
 
 ```
 GET /api/deployments/:id/logs?limit=100
 ```
 
-Response: array log entries (urutan ascending by time).
+Response: array of log entries (ascending order by time).
 
 ```json
 [
@@ -266,7 +270,7 @@ GET /api/deployments/:id/logs/stream
 Accept: text/event-stream
 ```
 
-Real-time log stream via Server-Sent Events. Format event:
+Real-time log stream via Server-Sent Events. Event format:
 
 ```
 data: {"level":"info","message":"Downloading model..."}
@@ -279,7 +283,7 @@ data: {"status":"running"}
 
 ### Internal Endpoints
 
-Header `X-Deploy-Secret: <DEPLOY_SECRET>` wajib ada.
+The `X-Deploy-Secret: <DEPLOY_SECRET>` header is required.
 
 #### Trigger orchestration
 
@@ -290,14 +294,14 @@ X-Deploy-Secret: <secret>
 { "deploymentId": "clx..." }
 ```
 
-Flow yang dijalankan secara async:
+Asynchronous flow:
 1. Status → `provisioning`
-2. Buat Cloudflare Tunnel
-3. Buat DNS CNAME record
+2. Create Cloudflare Tunnel
+3. Create DNS CNAME record
 4. Generate startup script
 5. Status → `starting`
-6. Buat RunPod pod
-7. Pod memanggil `/callback` saat siap → status → `running`
+6. Create RunPod pod
+7. Pod calls `/callback` when ready → status → `running`
 
 #### Pod callback (pod → backend)
 
@@ -305,7 +309,7 @@ Flow yang dijalankan secara async:
 POST /api/deployments/:id/callback
 X-Worker-Secret: <secret>
 
-{ "status": "running" }   // atau "failed"
+{ "status": "running" }   // or "failed"
 ```
 
 #### Pod push log
@@ -321,30 +325,30 @@ X-Worker-Secret: <secret>
 
 ## WebSocket
 
-Connect ke `ws://localhost:3001/ws?token=<privy-jwt>`.
+Connect to `ws://localhost:3001/ws?token=<privy-jwt>`.
 
 ### Flow
 
-1. Client connect dengan JWT di query string
-2. Server verifikasi token, kirim konfirmasi:
+1. Client connects with JWT in the query string
+2. Server verifies the token and sends confirmation:
    ```json
    { "type": "connected", "privyId": "did:privy:..." }
    ```
-3. Client subscribe ke deployment:
+3. Client subscribes to a deployment:
    ```json
    { "type": "subscribe", "deploymentId": "clx..." }
    ```
-4. Server kirim updates:
+4. Server sends updates:
    ```json
    { "type": "log", "level": "info", "message": "..." }
    { "type": "status", "status": "running" }
    ```
 
-### Close codes
+### Close Codes
 
-| Code | Alasan |
+| Code | Reason |
 |---|---|
-| `4001` | Token tidak ada atau invalid |
+| `4001` | Token missing or invalid |
 
 ---
 
@@ -352,59 +356,63 @@ Connect ke `ws://localhost:3001/ws?token=<privy-jwt>`.
 
 ### `users`
 
-| Column | Type | Keterangan |
+| Column | Type | Description |
 |---|---|---|
 | `id` | text PK | Privy user ID (`did:privy:...`) |
-| `wallet_address` | text | EVM wallet address (dari linked accounts Privy) |
+| `wallet_address` | text | Solana wallet address (from Privy linked accounts) |
 | `email` | text | Email address (nullable) |
-| `display_name` | text | Nama tampil yang dapat diubah user |
-| `avatar_url` | text | URL avatar (nullable) |
-| `created_at` | timestamp | Waktu pertama kali login |
-| `updated_at` | timestamp | Waktu terakhir update profil |
+| `display_name` | text | User-editable display name |
+| `avatar_url` | text | Avatar URL (nullable) |
+| `created_at` | timestamp | First login time |
+| `updated_at` | timestamp | Last profile update time |
 
 ### `models`
 
-| Column | Type | Keterangan |
+| Column | Type | Description |
 |---|---|---|
-| `id` | text PK | ID model (e.g. `qwen3-8b`) |
-| `label` | text | Nama tampil |
-| `size` | text | Ukuran model (e.g. `8B`) |
-| `desc` | text | Deskripsi singkat |
-| `recommended` | boolean | Ditampilkan sebagai rekomendasi |
+| `id` | text PK | Model ID (e.g. `qwen3-8b`) |
+| `label` | text | Display name |
+| `size` | text | Model size (e.g. `8B`) |
+| `desc` | text | Short description |
+| `recommended` | boolean | Shown as recommended |
 | `image` | text | Docker image |
-| `min_vram` | integer | Minimum VRAM dalam GB |
-| `is_active` | boolean | Visible di frontend |
+| `min_vram` | integer | Minimum VRAM in GB |
+| `is_active` | boolean | Visible on frontend |
 
 ### `deployments`
 
-| Column | Type | Keterangan |
+| Column | Type | Description |
 |---|---|---|
 | `id` | text PK | CUID2 |
-| `user_id` | text FK | Referensi ke `users.id` |
+| `user_id` | text FK | References `users.id` |
+| `agent_name` | text | User-defined agent name |
+| `agent_description` | text | User-defined agent description |
 | `mode` | enum | `dedicated`, `shared`, `external` |
-| `model_id` | text FK | Referensi ke `models.id` |
-| `model_label/size/image/min_vram` | text/int | Snapshot model saat deploy |
-| `skills` | jsonb | Array skill yang diaktifkan |
-| `memory` | jsonb | Konfigurasi memory agent |
-| `agent_behavior` | jsonb | Konfigurasi behavior agent |
-| `notifications` | jsonb | Konfigurasi notifikasi |
-| `auto_sleep` | boolean | Auto sleep saat idle |
+| `model_id` | text FK | References `models.id` |
+| `model_label/size/image/min_vram` | text/int | Snapshot of model at deploy time |
+| `skills` | jsonb | Array of enabled skills |
+| `memory` | jsonb | Agent memory configuration |
+| `agent_behavior` | jsonb | Agent behavior configuration |
+| `notifications` | jsonb | Notification configuration |
+| `auto_sleep` | jsonb | Auto-sleep configuration |
 | `status` | enum | `pending → provisioning → starting → running → stopped / failed` |
 | `tunnel_id` | text | Cloudflare Tunnel ID |
-| `tunnel_token` | text | Token untuk cloudflared |
-| `agent_domain` | text | Subdomain agent (e.g. `agent-abc12345.moltghost.io`) |
+| `tunnel_token` | text | Token for cloudflared |
+| `agent_domain` | text | Agent subdomain (e.g. `agent-abc12345.moltghost.io`) |
 | `dns_record_id` | text | Cloudflare DNS record ID |
 | `pod_id` | text | RunPod pod ID |
+| `created_at` | timestamp | Creation time |
+| `updated_at` | timestamp | Last update time |
 
 ### `deployment_logs`
 
-| Column | Type | Keterangan |
+| Column | Type | Description |
 |---|---|---|
 | `id` | text PK | CUID2 |
-| `deployment_id` | text FK | Referensi ke `deployments.id` |
+| `deployment_id` | text FK | References `deployments.id` (cascade delete) |
 | `level` | text | `info`, `warn`, `error` |
-| `message` | text | Isi log |
-| `created_at` | timestamp | Waktu log masuk |
+| `message` | text | Log content |
+| `created_at` | timestamp | Log entry time |
 
 ---
 
@@ -417,33 +425,33 @@ POST /api/deployments
     [pending]
         │  (trigger orchestration)
         ▼
- [provisioning] ← CF Tunnel dibuat
+ [provisioning] ← CF Tunnel created
         │
         ▼
-  [starting] ← RunPod pod dibuat
+  [starting] ← RunPod pod created
         │
         ▼
-  [running]  ← Pod callback konfirmasi siap
+  [running]  ← Pod callback confirms ready
         │
         ▼  (DELETE /api/deployments/:id)
   [stopped]
 
-  [failed]   ← Error di tahap mana pun
+  [failed]   ← Error at any stage
 ```
 
 ---
 
 ## Users API
 
-> Semua endpoint memerlukan `Authorization: Bearer <privy-token>`.
+> All endpoints require `Authorization: Bearer <privy-token>`.
 
-#### Profile user (autentikasi saat ini)
+#### Get authenticated user profile
 
 ```
 GET /api/users/me
 ```
 
-Response: user object. Record dibuat/diperbarui otomatis saat token diverifikasi.
+Response: user object. The record is automatically created/updated when the token is verified.
 
 ```json
 {
@@ -457,7 +465,7 @@ Response: user object. Record dibuat/diperbarui otomatis saat token diverifikasi
 }
 ```
 
-#### Update profil
+#### Update profile
 
 ```
 PATCH /api/users/me
@@ -466,7 +474,7 @@ Content-Type: application/json
 { "displayName": "Alice", "avatarUrl": "https://..." }
 ```
 
-#### Semua deployment milik user (shortcut)
+#### List all deployments for the authenticated user
 
 ```
 GET /api/users/me/deployments
@@ -476,9 +484,9 @@ Equivalent to `GET /api/deployments`.
 
 ---
 
-## Integrasi Next.js
+## Next.js Integration
 
-Tambahkan ke `.env.local` di project `moltghost-app-manager`:
+Add the following to `.env.local` in the `moltghost-app-manager` project:
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:3001
@@ -489,13 +497,13 @@ NEXT_PUBLIC_WS_URL=ws://localhost:3001/ws
 
 ## Scripts
 
-| Script | Perintah |
+| Script | Command |
 |---|---|
 | `pnpm dev` | Hot-reload development (tsx watch) |
-| `pnpm build` | Compile TypeScript ke `dist/` |
-| `pnpm start` | Jalankan `dist/index.js` |
-| `pnpm db:generate` | Generate SQL migration dari schema |
-| `pnpm db:migrate` | Jalankan migration |
-| `pnpm db:seed` | Seed tabel models |
-| `pnpm db:studio` | Buka Drizzle Studio (GUI) |
-| `pnpm tunnel` | Jalankan cloudflared quick tunnel + auto-update `BACKEND_PUBLIC_URL` di `.env` |
+| `pnpm build` | Compile TypeScript to `dist/` |
+| `pnpm start` | Run `dist/index.js` |
+| `pnpm db:generate` | Generate SQL migration from schema |
+| `pnpm db:migrate` | Run migrations |
+| `pnpm db:seed` | Seed the models table |
+| `pnpm db:studio` | Open Drizzle Studio (GUI) |
+| `pnpm tunnel` | Run cloudflared quick tunnel + auto-update `BACKEND_PUBLIC_URL` in `.env` |
