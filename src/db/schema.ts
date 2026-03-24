@@ -66,6 +66,10 @@ export const deployments = pgTable("deployments", {
     .notNull()
     .references(() => users.id),
 
+  // Agent identity
+  agentName: text("agent_name"),
+  agentDescription: text("agent_description"),
+
   // Step 1/5 – deployment mode
   mode: deploymentModeEnum("mode").notNull(),
 

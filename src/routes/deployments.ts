@@ -59,6 +59,42 @@ router.get("/:id", requireAuth, async (req: Request, res: Response) => {
   }
 });
 
+// PATCH /api/deployments/:id — update agent name/description
+router.patch("/:id", requireAuth, async (req: Request, res: Response) => {
+  try {
+    const { agentName, agentDescription } = req.body as {
+      agentName?: string;
+      agentDescription?: string;
+    };
+
+    const [updated] = await db
+      .update(deployments)
+      .set({
+        ...(agentName !== undefined && { agentName: agentName || null }),
+        ...(agentDescription !== undefined && {
+          agentDescription: agentDescription || null,
+        }),
+        updatedAt: new Date(),
+      })
+      .where(
+        and(
+          eq(deployments.id, req.params.id),
+          eq(deployments.userId, req.user!.privyId),
+        ),
+      )
+      .returning();
+
+    if (!updated) {
+      res.status(404).json({ error: "Not found" });
+      return;
+    }
+    res.json(updated);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 // POST /api/deployments — create new deployment (triggers CF Worker)
 router.post("/", requireAuth, async (req: Request, res: Response) => {
   try {
@@ -68,6 +104,8 @@ router.post("/", requireAuth, async (req: Request, res: Response) => {
       .insert(deployments)
       .values({
         userId: req.user!.privyId,
+        agentName: body.agentName || null,
+        agentDescription: body.agentDescription || null,
         mode: body.mode,
         modelId: body.modelId,
         modelLabel: body.modelLabel,

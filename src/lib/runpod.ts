@@ -469,8 +469,11 @@ log_step() {
   local phase="\${3:-deploy}"
   echo "[\$(date '+%H:%M:%S')] [\$level] \$msg" >> "\$LOG_FILE"
   echo "[\$(date '+%H:%M:%S')] [\$level] \$msg"
+  # Sanitize for JSON: collapse newlines/tabs to spaces, escape backslashes + quotes, strip remaining control chars
+  local safe
+  safe=\$(printf '%s' "\$msg" | tr '\\n\\r\\t' '   ' | sed 's/\\\\/\\\\\\\\/g; s/"/\\\\"/g' | tr -d '\\000-\\037')
   local json
-  json=\$(printf '{"message":"%s","level":"%s","phase":"%s"}' "\$(echo "\$msg" | sed 's/"/\\\\"/g')" "\$level" "\$phase")
+  json=\$(printf '{"message":"%s","level":"%s","phase":"%s"}' "\$safe" "\$level" "\$phase")
   curl -sSL -m 10 -X POST "\$LOG_URL" \\
     -H "Content-Type: application/json" \\
     -H "X-Worker-Secret: \$CALLBACK_SECRET" \
