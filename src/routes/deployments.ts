@@ -65,6 +65,7 @@ function decryptDeployment<T extends Record<string, unknown>>(row: T): T {
     tunnelId: decryptField(row.tunnelId as string | null),
     tunnelToken: null, // never expose tunnel token to clients
     dnsRecordId: decryptField(row.dnsRecordId as string | null),
+    gatewayToken: decryptField(row.gatewayToken as string | null),
   };
 }
 
@@ -508,6 +509,16 @@ router.post(
 
         // 3. Generate startup script
         const gatewayToken = crypto.randomBytes(16).toString("hex");
+
+        // Persist gateway token so frontend can open dashboard
+        await db
+          .update(deployments)
+          .set({
+            gatewayToken: encryptField(gatewayToken),
+            updatedAt: new Date(),
+          })
+          .where(eq(deployments.id, deploymentId));
+
         const backendBase =
           process.env.BACKEND_PUBLIC_URL ??
           `http://localhost:${process.env.PORT ?? 3001}`;

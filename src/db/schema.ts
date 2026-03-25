@@ -99,6 +99,7 @@ export const deployments = pgTable("deployments", {
   tunnelToken: text("tunnel_token"),
   agentDomain: text("agent_domain"),
   dnsRecordId: text("dns_record_id"),
+  gatewayToken: text("gateway_token"),
 
   // Lifecycle
   status: deploymentStatusEnum("status").notNull().default("pending"),
