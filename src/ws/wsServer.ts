@@ -16,7 +16,7 @@ function getJwtSecret(): string {
 }
 
 interface AuthedSocket extends WebSocket {
-  privyId?: string;
+  userId?: string;
   subscribedDeploymentId?: string;
   isAlive?: boolean;
 }
@@ -43,13 +43,13 @@ export function attachWebSocketServer(httpServer: Server): WebSocketServer {
 
     try {
       const payload = jwt.verify(token, getJwtSecret()) as { wallet: string };
-      ws.privyId = payload.wallet;
+      ws.userId = payload.wallet;
     } catch {
       ws.close(4001, "Invalid token");
       return;
     }
 
-    ws.send(JSON.stringify({ type: "connected", privyId: ws.privyId }));
+    ws.send(JSON.stringify({ type: "connected", userId: ws.userId }));
 
     // ── Message handling ──────────────────────────────────────────────────
     ws.on("message", async (raw) => {
@@ -69,7 +69,7 @@ export function attachWebSocketServer(httpServer: Server): WebSocketServer {
           .from(deployments)
           .where(eq(deployments.id, msg.deploymentId));
 
-        if (!deployment || deployment.userId !== ws.privyId) {
+        if (!deployment || deployment.userId !== ws.userId) {
           ws.send(
             JSON.stringify({ type: "error", message: "Deployment not found" }),
           );

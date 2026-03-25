@@ -14,8 +14,7 @@ function getJwtSecret(): string {
 
 /**
  * requireAuth — verifies self-issued JWT (wallet-based auth).
- * Upserts user record in DB, attaches req.user = { privyId, walletAddress }.
- * NOTE: privyId is now the wallet address (kept for backwards compat with routes).
+ * Upserts user record in DB, attaches req.user = { userId, walletAddress }.
  */
 export async function requireAuth(
   req: Request,
@@ -54,7 +53,7 @@ export async function requireAuth(
       });
 
     req.user = {
-      privyId: walletAddress,
+      userId: walletAddress,
       walletAddress,
     };
     next();
@@ -143,7 +142,7 @@ export async function requireAdminAuth(
       wallet: walletAddress?.slice(0, 10),
     });
     req.user = {
-      privyId: walletAddress,
+      userId: walletAddress,
       walletAddress,
     };
     next();

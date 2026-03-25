@@ -52,7 +52,7 @@ router.get("/me", requireAuth, async (req: Request, res: Response) => {
     const [user] = await db
       .select()
       .from(users)
-      .where(eq(users.id, req.user!.privyId));
+      .where(eq(users.id, req.user!.userId));
 
     if (!user) {
       res.status(404).json({ error: "User not found" });
@@ -83,7 +83,7 @@ router.patch("/me", requireAuth, async (req: Request, res: Response) => {
         ...(avatarUrl !== undefined && { avatarUrl: encryptField(avatarUrl) }),
         updatedAt: new Date(),
       })
-      .where(eq(users.id, req.user!.privyId))
+      .where(eq(users.id, req.user!.userId))
       .returning();
 
     res.json(decryptUser(updated));
@@ -102,7 +102,7 @@ router.get(
       const rows = await db
         .select()
         .from(deployments)
-        .where(eq(deployments.userId, req.user!.privyId))
+        .where(eq(deployments.userId, req.user!.userId))
         .orderBy(desc(deployments.createdAt));
 
       res.json(rows.map(decryptDeploymentRow));

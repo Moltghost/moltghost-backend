@@ -76,7 +76,7 @@ router.get("/", requireAuth, async (req: Request, res: Response) => {
     const rows = await db
       .select()
       .from(deployments)
-      .where(eq(deployments.userId, req.user!.privyId))
+      .where(eq(deployments.userId, req.user!.userId))
       .orderBy(desc(deployments.createdAt));
     res.json(rows.map(decryptDeployment));
   } catch (err) {
@@ -94,7 +94,7 @@ router.get("/:id", requireAuth, async (req: Request, res: Response) => {
       .where(
         and(
           eq(deployments.id, req.params.id),
-          eq(deployments.userId, req.user!.privyId),
+          eq(deployments.userId, req.user!.userId),
         ),
       );
     if (!row) {
@@ -133,7 +133,7 @@ router.patch("/:id", requireAuth, async (req: Request, res: Response) => {
       .where(
         and(
           eq(deployments.id, req.params.id),
-          eq(deployments.userId, req.user!.privyId),
+          eq(deployments.userId, req.user!.userId),
         ),
       )
       .returning();
@@ -179,7 +179,7 @@ router.post("/", requireAuth, async (req: Request, res: Response) => {
     const [deployment] = await db
       .insert(deployments)
       .values({
-        userId: req.user!.privyId,
+        userId: req.user!.userId,
         agentName: body.agentName || null,
         agentDescription: body.agentDescription || null,
         mode: body.mode,
@@ -253,7 +253,7 @@ router.delete("/:id", requireAuth, async (req: Request, res: Response) => {
       .where(
         and(
           eq(deployments.id, req.params.id),
-          eq(deployments.userId, req.user!.privyId),
+          eq(deployments.userId, req.user!.userId),
         ),
       );
 
@@ -341,7 +341,7 @@ router.get("/:id/logs", requireAuth, async (req: Request, res: Response) => {
       .where(
         and(
           eq(deployments.id, req.params.id),
-          eq(deployments.userId, req.user!.privyId),
+          eq(deployments.userId, req.user!.userId),
         ),
       );
     if (!deployment) {
@@ -376,7 +376,7 @@ router.get(
         .where(
           and(
             eq(deployments.id, req.params.id),
-            eq(deployments.userId, req.user!.privyId),
+            eq(deployments.userId, req.user!.userId),
           ),
         );
       if (!deployment) {

@@ -740,7 +740,7 @@ Connect to `ws://localhost:3001/ws?token=<jwt-token>`.
 1. Client connects with JWT in the query string
 2. Server verifies the token and sends confirmation:
    ```json
-   { "type": "connected", "privyId": "<solana-wallet-address>" }
+   { "type": "connected", "userId": "<solana-wallet-address>" }
    ```
 3. Client subscribes to a deployment:
    ```json
