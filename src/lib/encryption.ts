@@ -47,3 +47,27 @@ export function serverDecrypt(data: string): string {
   decipher.setAuthTag(Buffer.from(tagHex, "hex"));
   return decipher.update(encHex, "hex", "utf8") + decipher.final("utf8");
 }
+
+// ─── Field-level helpers (null-safe) ──────────────────────────────────────────
+
+export function encryptField(value: string | null | undefined): string | null {
+  if (value == null) return null;
+  return serverEncrypt(value);
+}
+
+export function decryptField(value: string | null | undefined): string | null {
+  if (value == null) return null;
+  return serverDecrypt(value);
+}
+
+export function encryptJson<T>(obj: T): string {
+  return serverEncrypt(JSON.stringify(obj));
+}
+
+export function decryptJson<T>(
+  value: string | null | undefined,
+  fallback: T,
+): T {
+  if (value == null) return fallback;
+  return JSON.parse(serverDecrypt(value)) as T;
+}

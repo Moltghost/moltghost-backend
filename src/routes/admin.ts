@@ -3,9 +3,51 @@ import { db } from "../db";
 import { users, deployments } from "../db/schema";
 import { desc, count, eq, inArray, or } from "drizzle-orm";
 import { requireAdminAuth } from "../middleware/auth";
+import { decryptField, decryptJson } from "../lib/encryption";
 import logger from "../lib/logger";
 
 const router: Router = Router();
+
+// ─── Decrypt helpers ──────────────────────────────────────────────────────────
+
+function decryptUserRow<T extends Record<string, unknown>>(row: T): T {
+  return {
+    ...row,
+    email: decryptField(row.email as string | null),
+    displayName: decryptField(row.displayName as string | null),
+    avatarUrl: decryptField(row.avatarUrl as string | null),
+  };
+}
+
+function decryptDeploymentRow<T extends Record<string, unknown>>(row: T): T {
+  return {
+    ...row,
+    skills: decryptJson(row.skills as string | null, []),
+    memory: decryptJson(row.memory as string | null, {
+      enablePrivateMemory: false,
+      persistentMemory: false,
+      encryption: false,
+    }),
+    agentBehavior: decryptJson(row.agentBehavior as string | null, {
+      autonomousMode: false,
+      taskTimeout: 30,
+      maxConcurrentTasks: 3,
+    }),
+    notifications: decryptJson(row.notifications as string | null, {
+      webhookNotifications: false,
+      emailAlerts: false,
+      taskReports: false,
+    }),
+    autoSleep: decryptJson(row.autoSleep as string | null, {
+      enableAutoSleep: false,
+      idleTimeout: 15,
+    }),
+    podId: decryptField(row.podId as string | null),
+    tunnelId: decryptField(row.tunnelId as string | null),
+    tunnelToken: null,
+    dnsRecordId: decryptField(row.dnsRecordId as string | null),
+  };
+}
 
 // ─── Admin Users ──────────────────────────────────────────────────────────────
 
@@ -34,7 +76,7 @@ router.get("/users", requireAdminAuth, async (req: Request, res: Response) => {
     );
 
     const enrichedUsers = allUsers.map((user) => ({
-      ...user,
+      ...decryptUserRow(user),
       deploymentCount: countMap.get(user.id) ?? 0,
     }));
 
@@ -82,10 +124,11 @@ router.get(
       // Enrich deployments with user info
       const enrichedDeployments = allDeployments.map((deployment) => {
         const user = userMap.get(deployment.userId);
+        const decryptedUser = user ? decryptUserRow(user) : null;
         return {
-          ...deployment,
-          userName: user?.displayName ?? null,
-          userEmail: user?.email ?? null,
+          ...decryptDeploymentRow(deployment),
+          userName: decryptedUser?.displayName ?? null,
+          userEmail: decryptedUser?.email ?? null,
           userWallet: user?.walletAddress ?? null,
         };
       });

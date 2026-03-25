@@ -5,7 +5,6 @@ import {
   integer,
   real,
   timestamp,
-  jsonb,
   pgEnum,
 } from "drizzle-orm/pg-core";
 import { createId } from "@paralleldrive/cuid2";
@@ -30,7 +29,7 @@ export const deploymentStatusEnum = pgEnum("deployment_status", [
 // ─── Users ───────────────────────────────────────────────────────────────────
 
 export const users = pgTable("users", {
-  // id = Privy user ID (did:privy:...)
+  // id = wallet address (public key)
   id: text("id").primaryKey(),
   walletAddress: text("wallet_address"),
   email: text("email"),
@@ -83,46 +82,12 @@ export const deployments = pgTable("deployments", {
   modelMinVram: integer("model_min_vram").notNull(),
 
   // Step 3/5 – agent settings
-  skills: jsonb("skills").$type<string[]>().notNull().default([]),
-  memory: jsonb("memory")
-    .$type<{
-      enablePrivateMemory: boolean;
-      persistentMemory: boolean;
-      encryption: boolean;
-    }>()
-    .notNull()
-    .default({
-      enablePrivateMemory: false,
-      persistentMemory: false,
-      encryption: false,
-    }),
-  agentBehavior: jsonb("agent_behavior")
-    .$type<{
-      autonomousMode: boolean;
-      taskTimeout: number;
-      maxConcurrentTasks: number;
-    }>()
-    .notNull()
-    .default({ autonomousMode: false, taskTimeout: 30, maxConcurrentTasks: 3 }),
-  notifications: jsonb("notifications")
-    .$type<{
-      webhookNotifications: boolean;
-      emailAlerts: boolean;
-      taskReports: boolean;
-    }>()
-    .notNull()
-    .default({
-      webhookNotifications: false,
-      emailAlerts: false,
-      taskReports: false,
-    }),
-  autoSleep: jsonb("auto_sleep")
-    .$type<{
-      enableAutoSleep: boolean;
-      idleTimeout: number;
-    }>()
-    .notNull()
-    .default({ enableAutoSleep: false, idleTimeout: 15 }),
+  // Server-side encrypted (AES-256-GCM blobs)
+  skills: text("skills"),
+  memory: text("memory"),
+  agentBehavior: text("agent_behavior"),
+  notifications: text("notifications"),
+  autoSleep: text("auto_sleep"),
 
   // Client-side zero-knowledge encryption
   isEncrypted: boolean("is_encrypted").notNull().default(false),

@@ -15,10 +15,58 @@ import {
   deleteDnsRecord,
 } from "../lib/cloudflare";
 import { createPod, deletePod, generateStartupScript } from "../lib/runpod";
-import { serverEncrypt, serverDecrypt } from "../lib/encryption";
+import {
+  serverEncrypt,
+  serverDecrypt,
+  encryptField,
+  encryptJson,
+  decryptField,
+  decryptJson,
+} from "../lib/encryption";
 import crypto from "crypto";
 
 const router: Router = Router();
+
+// ─── Decrypt helper ───────────────────────────────────────────────────────────
+
+const SKILLS_DEFAULT: string[] = [];
+const MEMORY_DEFAULT = {
+  enablePrivateMemory: false,
+  persistentMemory: false,
+  encryption: false,
+};
+const BEHAVIOR_DEFAULT = {
+  autonomousMode: false,
+  taskTimeout: 30,
+  maxConcurrentTasks: 3,
+};
+const NOTIF_DEFAULT = {
+  webhookNotifications: false,
+  emailAlerts: false,
+  taskReports: false,
+};
+const SLEEP_DEFAULT = { enableAutoSleep: false, idleTimeout: 15 };
+
+function decryptDeployment<T extends Record<string, unknown>>(row: T): T {
+  return {
+    ...row,
+    skills: decryptJson(row.skills as string | null, SKILLS_DEFAULT),
+    memory: decryptJson(row.memory as string | null, MEMORY_DEFAULT),
+    agentBehavior: decryptJson(
+      row.agentBehavior as string | null,
+      BEHAVIOR_DEFAULT,
+    ),
+    notifications: decryptJson(
+      row.notifications as string | null,
+      NOTIF_DEFAULT,
+    ),
+    autoSleep: decryptJson(row.autoSleep as string | null, SLEEP_DEFAULT),
+    podId: decryptField(row.podId as string | null),
+    tunnelId: decryptField(row.tunnelId as string | null),
+    tunnelToken: null, // never expose tunnel token to clients
+    dnsRecordId: decryptField(row.dnsRecordId as string | null),
+  };
+}
 
 // ─── User CRUD ────────────────────────────────────────────────────────────────
 
@@ -30,7 +78,7 @@ router.get("/", requireAuth, async (req: Request, res: Response) => {
       .from(deployments)
       .where(eq(deployments.userId, req.user!.privyId))
       .orderBy(desc(deployments.createdAt));
-    res.json(rows);
+    res.json(rows.map(decryptDeployment));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
@@ -53,7 +101,7 @@ router.get("/:id", requireAuth, async (req: Request, res: Response) => {
       res.status(404).json({ error: "Not found" });
       return;
     }
-    res.json(row);
+    res.json(decryptDeployment(row));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
@@ -94,7 +142,7 @@ router.patch("/:id", requireAuth, async (req: Request, res: Response) => {
       res.status(404).json({ error: "Not found" });
       return;
     }
-    res.json(updated);
+    res.json(decryptDeployment(updated));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
@@ -105,6 +153,28 @@ router.patch("/:id", requireAuth, async (req: Request, res: Response) => {
 router.post("/", requireAuth, async (req: Request, res: Response) => {
   try {
     const body = req.body;
+
+    // Defaults for JSONB-turned-TEXT fields (encrypted at rest)
+    const skillsVal = body.skills ?? [];
+    const memoryVal = body.memory ?? {
+      enablePrivateMemory: false,
+      persistentMemory: false,
+      encryption: false,
+    };
+    const agentBehaviorVal = body.agentBehavior ?? {
+      autonomousMode: false,
+      taskTimeout: 30,
+      maxConcurrentTasks: 3,
+    };
+    const notificationsVal = body.notifications ?? {
+      webhookNotifications: false,
+      emailAlerts: false,
+      taskReports: false,
+    };
+    const autoSleepVal = body.autoSleep ?? {
+      enableAutoSleep: false,
+      idleTimeout: 15,
+    };
 
     const [deployment] = await db
       .insert(deployments)
@@ -118,11 +188,11 @@ router.post("/", requireAuth, async (req: Request, res: Response) => {
         modelSize: body.modelSize,
         modelImage: body.modelImage,
         modelMinVram: body.modelMinVram,
-        skills: body.skills ?? [],
-        memory: body.memory,
-        agentBehavior: body.agentBehavior,
-        notifications: body.notifications,
-        autoSleep: body.autoSleep,
+        skills: encryptJson(skillsVal),
+        memory: encryptJson(memoryVal),
+        agentBehavior: encryptJson(agentBehaviorVal),
+        notifications: encryptJson(notificationsVal),
+        autoSleep: encryptJson(autoSleepVal),
         isEncrypted: body.isEncrypted ?? false,
         encryptionVersion: body.encryptionVersion ?? null,
         status: "pending",
@@ -167,7 +237,7 @@ router.post("/", requireAuth, async (req: Request, res: Response) => {
         );
     }
 
-    res.status(201).json(deployment);
+    res.status(201).json(decryptDeployment(deployment));
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
@@ -192,29 +262,34 @@ router.delete("/:id", requireAuth, async (req: Request, res: Response) => {
       return;
     }
 
+    // Decrypt infra IDs before cleanup API calls
+    const podIdPlain = decryptField(deployment.podId);
+    const tunnelIdPlain = decryptField(deployment.tunnelId);
+    const dnsRecordIdPlain = decryptField(deployment.dnsRecordId);
+
     // 1. Terminate RunPod pod (best-effort)
-    if (deployment.podId) {
+    if (podIdPlain) {
       try {
-        await deletePod(deployment.podId);
+        await deletePod(podIdPlain);
       } catch (err) {
-        console.warn(`Failed to terminate pod ${deployment.podId}:`, err);
+        console.warn(`Failed to terminate pod ${podIdPlain}:`, err);
       }
     }
 
     // 2. Cleanup Cloudflare resources (await both, best-effort)
-    if (deployment.tunnelId) {
+    if (tunnelIdPlain) {
       try {
-        await deleteTunnel(deployment.tunnelId);
+        await deleteTunnel(tunnelIdPlain);
       } catch (err) {
-        console.warn(`Failed to delete tunnel ${deployment.tunnelId}:`, err);
+        console.warn(`Failed to delete tunnel ${tunnelIdPlain}:`, err);
       }
     }
 
-    if (deployment.dnsRecordId) {
+    if (dnsRecordIdPlain) {
       try {
-        await deleteDnsRecord(deployment.dnsRecordId);
+        await deleteDnsRecord(dnsRecordIdPlain);
       } catch (err) {
-        console.warn(`Failed to delete DNS ${deployment.dnsRecordId}:`, err);
+        console.warn(`Failed to delete DNS ${dnsRecordIdPlain}:`, err);
       }
     }
 
@@ -423,10 +498,10 @@ router.post(
         await db
           .update(deployments)
           .set({
-            tunnelId,
+            tunnelId: encryptField(tunnelId),
             tunnelToken: serverEncrypt(tunnelToken),
             agentDomain,
-            dnsRecordId,
+            dnsRecordId: encryptField(dnsRecordId),
             updatedAt: new Date(),
           })
           .where(eq(deployments.id, deploymentId));
@@ -470,7 +545,7 @@ router.post(
 
         await db
           .update(deployments)
-          .set({ podId: pod.podId, updatedAt: new Date() })
+          .set({ podId: encryptField(pod.podId), updatedAt: new Date() })
           .where(eq(deployments.id, deploymentId));
 
         // Pod will call /callback when ready — status updated there

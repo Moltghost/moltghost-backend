@@ -4,6 +4,7 @@ import cors from "cors";
 import { createServer } from "http";
 import { attachWebSocketServer } from "./ws/wsServer";
 
+import authRouter from "./routes/auth";
 import modelsRouter from "./routes/models";
 import runpodRouter from "./routes/runpod";
 import deploymentsRouter from "./routes/deployments";
@@ -26,6 +27,7 @@ app.use(express.json());
 app.set("etag", false);
 
 // ── Routes ─────────────────────────────────────────────────────────────────────
+app.use("/api/auth", authRouter);
 app.use("/api/models", modelsRouter);
 app.use("/api/runpod", runpodRouter);
 app.use("/api/deployments", deploymentsRouter);

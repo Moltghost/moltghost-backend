@@ -1,23 +1,21 @@
 import { Request, Response, NextFunction } from "express";
-import { PrivyClient } from "@privy-io/node";
+import jwt from "jsonwebtoken";
 import { db } from "../db";
 import { users } from "../db/schema";
 import logger from "../lib/logger";
 
-let _privy: PrivyClient | null = null;
-function getPrivy() {
-  if (!_privy) {
-    _privy = new PrivyClient({
-      appId: process.env.PRIVY_APP_ID!,
-      appSecret: process.env.PRIVY_APP_SECRET!,
-    });
+function getJwtSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (!secret || secret.length < 32) {
+    throw new Error("JWT_SECRET must be set (min 32 chars)");
   }
-  return _privy;
+  return secret;
 }
 
 /**
- * requireAuth — verifies Bearer JWT from Privy.
+ * requireAuth — verifies self-issued JWT (wallet-based auth).
  * Upserts user record in DB, attaches req.user = { privyId, walletAddress }.
+ * NOTE: privyId is now the wallet address (kept for backwards compat with routes).
  */
 export async function requireAuth(
   req: Request,
@@ -33,51 +31,31 @@ export async function requireAuth(
   const token = authHeader.slice(7);
 
   try {
-    const claims = await getPrivy().utils().auth().verifyAuthToken(token);
-    const privyUser = await getPrivy().users()._get(claims.user_id);
+    const payload = jwt.verify(token, getJwtSecret()) as {
+      sub: string;
+      wallet: string;
+    };
 
-    const walletAccount = (
-      privyUser.linked_accounts as Array<{
-        type: string;
-        address?: string;
-        chain_type?: string;
-      }>
-    ).find((a) => a.type === "wallet" && a.chain_type === "solana");
+    const walletAddress = payload.wallet;
 
-    const emailAccount = (
-      privyUser.linked_accounts as Array<{ type: string; address?: string }>
-    ).find((a) => a.type === "email");
-
-    const walletAddress = walletAccount?.address ?? null;
-    const email = emailAccount?.address ?? null;
-    const displayName =
-      (privyUser as any).name || (privyUser as any).display_name || null;
-    const avatarUrl = (privyUser as any).profilePictureUrl || null;
-
-    // Upsert user — create on first login, update wallet/email/displayName if changed
+    // Upsert user — create on first login, update timestamp if exists
     await db
       .insert(users)
       .values({
-        id: claims.user_id,
+        id: walletAddress,
         walletAddress,
-        email,
-        displayName,
-        avatarUrl,
       })
       .onConflictDoUpdate({
         target: users.id,
         set: {
           walletAddress,
-          email,
-          displayName,
-          avatarUrl,
           updatedAt: new Date(),
         },
       });
 
     req.user = {
-      privyId: claims.user_id,
-      walletAddress: walletAddress ?? undefined,
+      privyId: walletAddress,
+      walletAddress,
     };
     next();
   } catch {
@@ -120,9 +98,8 @@ export function requireWorkerSecret(
 }
 
 /**
- * requireAdminAuth — verifies Bearer JWT from Privy AND checks if wallet is admin.
+ * requireAdminAuth — verifies JWT AND checks if wallet is admin.
  * Requires: process.env.ADMIN_WALLET set to admin wallet address
- * Attaches req.user = { privyId, walletAddress }.
  */
 export async function requireAdminAuth(
   req: Request,
@@ -130,11 +107,6 @@ export async function requireAdminAuth(
   next: NextFunction,
 ): Promise<void> {
   const authHeader = req.headers.authorization;
-  logger.info("Admin request received", {
-    hasAuthHeader: !!authHeader,
-    path: req.path,
-  });
-
   if (!authHeader?.startsWith("Bearer ")) {
     logger.warn("Missing Bearer token in admin request");
     res.status(401).json({ error: "Missing Bearer token" });
@@ -144,39 +116,22 @@ export async function requireAdminAuth(
   const token = authHeader.slice(7);
 
   try {
-    const claims = await getPrivy().utils().auth().verifyAuthToken(token);
-    const privyUser = await getPrivy().users()._get(claims.user_id);
+    const payload = jwt.verify(token, getJwtSecret()) as {
+      sub: string;
+      wallet: string;
+    };
 
-    const walletAccount = (
-      privyUser.linked_accounts as Array<{
-        type: string;
-        address?: string;
-        chain_type?: string;
-      }>
-    ).find((a) => a.type === "wallet" && a.chain_type === "solana");
-
-    const walletAddress = walletAccount?.address ?? null;
-    logger.info("Token verified", {
-      userWallet: walletAddress?.slice(0, 10),
-    });
+    const walletAddress = payload.wallet;
 
     // Verify admin
     const adminWallet = process.env.ADMIN_WALLET;
-    logger.debug("Admin wallet verification", {
-      userWallet: walletAddress?.slice(0, 10),
-      adminWallet: adminWallet?.slice(0, 10),
-    });
-
     if (!adminWallet) {
       logger.error("Admin wallet not configured in environment");
       res.status(500).json({ error: "Admin wallet not configured" });
       return;
     }
 
-    if (
-      !walletAddress ||
-      walletAddress.toLowerCase() !== adminWallet.toLowerCase()
-    ) {
+    if (walletAddress !== adminWallet) {
       logger.warn("Unauthorized admin access attempt", {
         attemptedWallet: walletAddress?.slice(0, 10),
       });
@@ -188,8 +143,8 @@ export async function requireAdminAuth(
       wallet: walletAddress?.slice(0, 10),
     });
     req.user = {
-      privyId: claims.user_id,
-      walletAddress: walletAddress ?? undefined,
+      privyId: walletAddress,
+      walletAddress,
     };
     next();
   } catch (err) {

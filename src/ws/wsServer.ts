@@ -2,22 +2,17 @@ import { EventEmitter } from "events";
 import { WebSocketServer, WebSocket } from "ws";
 import { IncomingMessage } from "http";
 import { Server } from "http";
-import { PrivyClient } from "@privy-io/node";
+import jwt from "jsonwebtoken";
 import { db } from "../db";
 import { deployments } from "../db/schema";
 import { eq } from "drizzle-orm";
 
 export const deploymentEmitter = new EventEmitter();
 
-let _privy: PrivyClient | null = null;
-function getPrivy() {
-  if (!_privy) {
-    _privy = new PrivyClient({
-      appId: process.env.PRIVY_APP_ID!,
-      appSecret: process.env.PRIVY_APP_SECRET!,
-    });
-  }
-  return _privy;
+function getJwtSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) throw new Error("JWT_SECRET not set");
+  return secret;
 }
 
 interface AuthedSocket extends WebSocket {
@@ -37,7 +32,7 @@ export function attachWebSocketServer(httpServer: Server): WebSocketServer {
     ws.isAlive = true;
 
     // ── Auth handshake ────────────────────────────────────────────────────
-    // Expect token in query string: /ws?token=<privy-jwt>
+    // Expect token in query string: /ws?token=<jwt>
     const url = new URL(req.url!, `http://${req.headers.host}`);
     const token = url.searchParams.get("token");
 
@@ -47,8 +42,8 @@ export function attachWebSocketServer(httpServer: Server): WebSocketServer {
     }
 
     try {
-      const claims = await getPrivy().utils().auth().verifyAuthToken(token);
-      ws.privyId = claims.user_id;
+      const payload = jwt.verify(token, getJwtSecret()) as { wallet: string };
+      ws.privyId = payload.wallet;
     } catch {
       ws.close(4001, "Invalid token");
       return;
