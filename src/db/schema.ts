@@ -35,6 +35,7 @@ export const users = pgTable("users", {
   email: text("email"),
   displayName: text("display_name"),
   avatarUrl: text("avatar_url"),
+  runpodApiKey: text("runpod_api_key"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
@@ -92,6 +93,12 @@ export const deployments = pgTable("deployments", {
   // Client-side zero-knowledge encryption
   isEncrypted: boolean("is_encrypted").notNull().default(false),
   encryptionVersion: text("encryption_version"),
+
+  // User-provided RunPod API key (encrypted, nullable = use platform key)
+  runpodApiKey: text("runpod_api_key"),
+
+  // User-selected GPU type (e.g. "NVIDIA L4", "NVIDIA RTX A4500")
+  gpuTypeId: text("gpu_type_id"),
 
   // RunPod / infra (nullable until provisioned)
   podId: text("pod_id"),

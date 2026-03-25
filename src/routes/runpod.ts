@@ -7,19 +7,31 @@ const router: Router = Router();
 let gpuCache: { data: unknown; fetchedAt: number } | null = null;
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
-// GET /api/runpod/gpu-types
-router.get("/gpu-types", requireAuth, async (_req, res) => {
+// POST /api/runpod/gpu-types
+router.post("/gpu-types", requireAuth, async (req, res) => {
   try {
-    if (gpuCache && Date.now() - gpuCache.fetchedAt < CACHE_TTL_MS) {
+    // API key in request body to avoid log exposure
+    const userApiKey =
+      typeof req.body?.apiKey === "string" && req.body.apiKey
+        ? req.body.apiKey
+        : undefined;
+
+    // Skip cache when using a user-provided key
+    if (
+      !userApiKey &&
+      gpuCache &&
+      Date.now() - gpuCache.fetchedAt < CACHE_TTL_MS
+    ) {
       res.json(gpuCache.data);
       return;
     }
 
+    const apiKey = userApiKey || process.env.RUNPOD_API_KEY;
     const response = await fetch("https://api.runpod.io/graphql", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.RUNPOD_API_KEY}`,
+        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
         query: `{
@@ -38,8 +50,18 @@ router.get("/gpu-types", requireAuth, async (_req, res) => {
       }),
     });
 
-    const json = (await response.json()) as { data?: { gpuTypes?: unknown[] } };
-    const gpuTypes = json.data?.gpuTypes ?? [];
+    const json = (await response.json()) as {
+      data?: { gpuTypes?: unknown[] };
+      errors?: { message: string }[];
+    };
+
+    // RunPod returns 401 for invalid keys; may return warnings in errors[] alongside valid data
+    if (!response.ok || !json.data?.gpuTypes?.length) {
+      res.status(401).json({ error: "Invalid RunPod API key" });
+      return;
+    }
+
+    const gpuTypes = json.data.gpuTypes;
 
     // Filter to only allowed GPU IDs if env var is set
     const allowed = process.env.RUNPOD_ALLOWED_GPU_IDS
@@ -52,7 +74,10 @@ router.get("/gpu-types", requireAuth, async (_req, res) => {
         )
       : gpuTypes;
 
-    gpuCache = { data: filtered, fetchedAt: Date.now() };
+    // Only cache results from platform key
+    if (!userApiKey) {
+      gpuCache = { data: filtered, fetchedAt: Date.now() };
+    }
     res.json(filtered);
   } catch (err) {
     console.error("GET /api/runpod/gpu-types", err);

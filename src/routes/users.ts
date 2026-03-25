@@ -3,7 +3,13 @@ import { db } from "../db";
 import { users, deployments } from "../db/schema";
 import { eq, desc } from "drizzle-orm";
 import { requireAuth } from "../middleware/auth";
-import { encryptField, decryptField, decryptJson } from "../lib/encryption";
+import {
+  encryptField,
+  decryptField,
+  decryptJson,
+  serverEncrypt,
+  serverDecrypt,
+} from "../lib/encryption";
 
 const router: Router = Router();
 
@@ -13,6 +19,7 @@ function decryptUser<T extends Record<string, unknown>>(row: T): T {
     email: decryptField(row.email as string | null),
     displayName: decryptField(row.displayName as string | null),
     avatarUrl: decryptField(row.avatarUrl as string | null),
+    runpodApiKey: row.runpodApiKey ? true : false,
   };
 }
 
@@ -66,12 +73,13 @@ router.get("/me", requireAuth, async (req: Request, res: Response) => {
   }
 });
 
-// PATCH /api/users/me — update displayName / avatarUrl
+// PATCH /api/users/me — update displayName / avatarUrl / runpodApiKey
 router.patch("/me", requireAuth, async (req: Request, res: Response) => {
   try {
-    const { displayName, avatarUrl } = req.body as {
+    const { displayName, avatarUrl, runpodApiKey } = req.body as {
       displayName?: string;
       avatarUrl?: string;
+      runpodApiKey?: string | null;
     };
 
     const [updated] = await db
@@ -81,6 +89,9 @@ router.patch("/me", requireAuth, async (req: Request, res: Response) => {
           displayName: encryptField(displayName),
         }),
         ...(avatarUrl !== undefined && { avatarUrl: encryptField(avatarUrl) }),
+        ...(runpodApiKey !== undefined && {
+          runpodApiKey: runpodApiKey ? serverEncrypt(runpodApiKey) : null,
+        }),
         updatedAt: new Date(),
       })
       .where(eq(users.id, req.user!.userId))

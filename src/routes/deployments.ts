@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { db } from "../db";
-import { deployments, deploymentLogs } from "../db/schema";
+import { deployments, deploymentLogs, users } from "../db/schema";
 import { eq, desc, and } from "drizzle-orm";
 import {
   requireAuth,
@@ -66,6 +66,8 @@ function decryptDeployment<T extends Record<string, unknown>>(row: T): T {
     tunnelToken: null, // never expose tunnel token to clients
     dnsRecordId: decryptField(row.dnsRecordId as string | null),
     gatewayToken: decryptField(row.gatewayToken as string | null),
+    // Show whether user provided their own key, but never expose the full key
+    runpodApiKey: row.runpodApiKey ? "user-provided" : null,
   };
 }
 
@@ -177,6 +179,21 @@ router.post("/", requireAuth, async (req: Request, res: Response) => {
       idleTimeout: 15,
     };
 
+    // Resolve RunPod API key: use provided key, or fall back to user's saved key
+    let resolvedRunpodKey: string | null = null;
+    if (body.runpodApiKey && body.runpodApiKey !== "__saved__") {
+      resolvedRunpodKey = serverEncrypt(body.runpodApiKey);
+    } else {
+      // Pull saved key from user profile
+      const [user] = await db
+        .select({ runpodApiKey: users.runpodApiKey })
+        .from(users)
+        .where(eq(users.id, req.user!.userId));
+      if (user?.runpodApiKey) {
+        resolvedRunpodKey = user.runpodApiKey; // already encrypted
+      }
+    }
+
     const [deployment] = await db
       .insert(deployments)
       .values({
@@ -196,6 +213,8 @@ router.post("/", requireAuth, async (req: Request, res: Response) => {
         autoSleep: encryptJson(autoSleepVal),
         isEncrypted: body.isEncrypted ?? false,
         encryptionVersion: body.encryptionVersion ?? null,
+        runpodApiKey: resolvedRunpodKey,
+        gpuTypeId: body.gpuType || null,
         status: "pending",
       })
       .returning();
@@ -267,11 +286,14 @@ router.delete("/:id", requireAuth, async (req: Request, res: Response) => {
     const podIdPlain = decryptField(deployment.podId);
     const tunnelIdPlain = decryptField(deployment.tunnelId);
     const dnsRecordIdPlain = decryptField(deployment.dnsRecordId);
+    const userRunpodKey = deployment.runpodApiKey
+      ? serverDecrypt(deployment.runpodApiKey)
+      : undefined;
 
     // 1. Terminate RunPod pod (best-effort)
     if (podIdPlain) {
       try {
-        await deletePod(podIdPlain);
+        await deletePod(podIdPlain, userRunpodKey);
       } catch (err) {
         console.warn(`Failed to terminate pod ${podIdPlain}:`, err);
       }
@@ -543,11 +565,17 @@ router.post(
           .where(eq(deployments.id, deploymentId));
         deploymentEmitter.emit("status", deploymentId, "starting");
 
+        // Use user's RunPod API key if provided, otherwise platform key
+        const userRunpodKey = deployment.runpodApiKey
+          ? serverDecrypt(deployment.runpodApiKey)
+          : undefined;
+
         const pod = await createPod(
           `moltghost-${shortId}`,
           startupScript,
-          undefined, // uses RUNPOD_GPU_TYPE from env
+          deployment.gpuTypeId || undefined,
           deployment.modelImage,
+          userRunpodKey,
         );
         await addLog(
           `Pod created: ${pod.podId} — waiting for boot...`,

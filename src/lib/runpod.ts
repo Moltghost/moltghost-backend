@@ -83,12 +83,14 @@ function getImageName(): string {
 async function runpodQuery<T = Record<string, unknown>>(
   query: string,
   variables?: Record<string, unknown>,
+  apiKey?: string,
 ): Promise<T> {
+  const key = apiKey || getApiKey();
   const res = await fetch(RUNPOD_API, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${getApiKey()}`,
+      Authorization: `Bearer ${key}`,
     },
     body: JSON.stringify({ query, variables }),
   });
@@ -121,6 +123,7 @@ export interface GpuAvailability {
 
 export async function checkGpuAvailability(
   gpuTypeIds: string[],
+  apiKey?: string,
 ): Promise<GpuAvailability[]> {
   const query = `
     query GpuTypes {
@@ -140,7 +143,7 @@ export async function checkGpuAvailability(
       communityCloud: boolean;
       secureCloud: boolean;
     }[];
-  }>(query);
+  }>(query, undefined, apiKey);
 
   const gpuTypes = data.gpuTypes || [];
 
@@ -167,6 +170,7 @@ export async function createPod(
   startupScript: string,
   gpuType?: string,
   imageName?: string,
+  apiKey?: string,
 ): Promise<RunPodResult> {
   const selectedGpu = gpuType || getGpuType();
   const selectedImage = imageName || getImageName();
@@ -207,7 +211,7 @@ export async function createPod(
 
   const data = await runpodQuery<{
     podFindAndDeployOnDemand: { id: string; desiredStatus: string };
-  }>(query, variables);
+  }>(query, variables, apiKey);
 
   const pod = data.podFindAndDeployOnDemand;
   if (!pod?.id) {
@@ -338,7 +342,7 @@ export async function startPod(podId: string): Promise<void> {
 // Delete/Terminate Pod (permanent)
 // ---------------------------------------------------------------------------
 
-export async function deletePod(podId: string): Promise<void> {
+export async function deletePod(podId: string, apiKey?: string): Promise<void> {
   const query = `
     mutation {
       podTerminate(input: { podId: "${podId}" }) 
@@ -346,7 +350,7 @@ export async function deletePod(podId: string): Promise<void> {
   `;
 
   try {
-    await runpodQuery(query);
+    await runpodQuery(query, undefined, apiKey);
   } catch (err) {
     // If pod already gone, that's fine — let the caller proceed
     const msg = String(err).toLowerCase();
