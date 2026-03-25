@@ -1,0 +1,10 @@
+node_modules
+.next
+dist
+.env
+.env.*
+.git
+logs
+*.md
+.DS_Store
+drizzle
